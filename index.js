@@ -33,6 +33,9 @@ async function run() {
     const database2 = client.db("cartDB");
     const cartCollection = database.collection("cart");
 
+    const topCollection = client.db("topDB").collection("top")
+    const arrivalCollection = client.db("arrivalDB").collection("arrival")
+
 
 
     // create product
@@ -61,7 +64,9 @@ async function run() {
     })
 
     app.get("/myCart", async(req, res) => {
-      const cursor = cartCollection.find()
+     const email = req.query.email
+     const query = {email : email}
+      const cursor = cartCollection.find(query)
       const result = await cursor.toArray()
       res.send(result)
     })
@@ -110,6 +115,26 @@ async function run() {
       const id = req.params.id
       const filter = {_id : new ObjectId(id)}
       const result = await cartCollection.deleteOne(filter)
+      res.send(result)
+    })
+
+
+    // top product 
+
+    app.get("/topProduct", async(req, res) => {
+      const cursor = topCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    app.get("/newArrival", async(req, res) => {
+      const cursor = arrivalCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+    app.get("/cartCount", async(req, res) => {
+      const cursor = cartCollection.find()
+      const result = await cursor.toArray()
       res.send(result)
     })
 
