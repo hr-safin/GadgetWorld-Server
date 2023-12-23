@@ -35,6 +35,7 @@ async function run() {
 
     const topCollection = client.db("topDB").collection("top")
     const arrivalCollection = client.db("arrivalDB").collection("arrival")
+    const brandCollection = client.db("brandDB").collection("brand")
 
 
 
@@ -134,6 +135,14 @@ async function run() {
 
     app.get("/cartCount", async(req, res) => {
       const cursor = cartCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+    // brand
+
+    app.get("/allBrand", async(req, res) => {
+      const cursor = brandCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
