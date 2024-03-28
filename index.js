@@ -122,7 +122,7 @@ async function run() {
 
     // top product 
 
-    app.get("/topProduct", async(req, res) => {
+    app.get("/topProduct", async (req, res) => {
       const cursor = topCollection.find()
       const result = await cursor.toArray()
       res.send(result)
